@@ -19,14 +19,14 @@ Query To Load complete JSON file nodes
 
 Create Nodes 
 
-WITH "file:///sample-topology.json" as url 
+`WITH "file:///sample-topology.json" as url 
 CALL apoc.load.json(url) YIELD value 
 UNWIND  value.nodeInstances as data
-MERGE (nodeItem:Node {id: data.id, importKey:data.importKey, nodeTemplateName: data.nodeTemplateName, nodeTemplateId:data.nodeTemplateId, name: data.name})
+MERGE (nodeItem:Node {id: data.id, importKey:data.importKey, nodeTemplateName: data.nodeTemplateName, nodeTemplateId:data.nodeTemplateId, name: data.name})`
 
 Create Relations
 
-WITH "file:///sample-topology.json" as url 
+`WITH "file:///sample-topology.json" as url 
 CALL apoc.load.json(url) YIELD value 
 UNWIND value.relationshipInstances as data
 MATCH
@@ -34,18 +34,18 @@ MATCH
   (b:Node)
 WHERE a.id = data.srcId AND b.id = data.dstId
 MERGE (b)-[r:CONNECTED {type:data.relationship.relationshipType}]->(a)
-RETURN type(r)
+RETURN type(r)`
 
 
 Delete All relations Neo4J
-start r=relationship(*) 
-delete r;
+`start r=relationship(*) 
+delete r;`
 
 In cypher3.5, start is deprecated.
 
 You can use this cypher to delete all relationships
 
-match ()-[r]->() delete r;
+`match ()-[r]->() delete r;`
 
 ### With above JSON, a process remain continued to load 250MB of data for hours so it did not worth much and following is admin-import utility with neo4j that helps to import huge data very quickly
 
@@ -54,38 +54,38 @@ Fist of all find something to convert data to a csv file and I used jq for the p
 
 Started using jq to convert json feeds to CSV
 
-$ jq -r '["id","importKey","name","nodeTemplateId", "nodeTemplateName"],(.[].nodeInstances|flatten[]|[.id, .importKey, .name, .nodeTemplateId, .nodeTemplateName])|@csv' sample-topology_1.json >all_nodes.csv
+` jq -r '["id","importKey","name","nodeTemplateId", "nodeTemplateName"],(.[].nodeInstances|flatten[]|[.id, .importKey, .name, .nodeTemplateId, .nodeTemplateName])|@csv' sample-topology_1.json >all_nodes.csv`
 
-LOAD CSV WITH HEADERS FROM 'file:///all_nodes.csv' AS row
+`LOAD CSV WITH HEADERS FROM 'file:///all_nodes.csv' AS row
 WITH row WHERE row.id IS NOT NULL
-CREATE (nodeItem:Node {id: row.id, importKey:row.importKey, nodeTemplateName: row.nodeTemplateName, nodeTemplateId:row.nodeTemplateId, name: row.name})
+CREATE (nodeItem:Node {id: row.id, importKey:row.importKey, nodeTemplateName: row.nodeTemplateName, nodeTemplateId:row.nodeTemplateId, name: row.name})`
 
 
 
-jq -r '["srcId","destId","relationType","percentageRelationship", "weightedRelationship"],(.[].relationshipInstances|flatten[]|[.srcId, .dstId, .relationship.relationshipType, .relationship.percentageRelationship, .relationship.weightedRelationship])|@csv' sample-topology_1.json >all_relations.csv
+`jq -r '["srcId","destId","relationType","percentageRelationship", "weightedRelationship"],(.[].relationshipInstances|flatten[]|[.srcId, .dstId, .relationship.relationshipType, .relationship.percentageRelationship, .relationship.weightedRelationship])|@csv' sample-topology_1.json >all_relations.csv`
 
 
-LOAD CSV WITH HEADERS FROM 'file:///all_relations.csv' AS row
-MERGE (nodeItem:Node {id: row.id, importKey:row.importKey, nodeTemplateName: row.nodeTemplateName, nodeTemplateId:row.nodeTemplateId, name: row.name})
+`LOAD CSV WITH HEADERS FROM 'file:///all_relations.csv' AS row
+MERGE (nodeItem:Node {id: row.id, importKey:row.importKey, nodeTemplateName: row.nodeTemplateName, nodeTemplateId:row.nodeTemplateId, name: row.name})`
 
 version-neo 4.4
-bin/neo4j-admin import --database=sie --nodes=/import/all_nodes.csv
+`bin/neo4j-admin import --database=sie --nodes=/import/all_nodes.csv`
 
 version-neo5.6.0
-bin/neo4j-admin database import full --nodes=/import/all_nodes.csv sie
+`bin/neo4j-admin database import full --nodes=/import/all_nodes.csv sie`
 
 Test JQ command
-jq -r '[.[].nodeInstances[]]|unique_by(.id)' sample-topology.json
+`jq -r '[.[].nodeInstances[]]|unique_by(.id)' sample-topology.json`
 
 Following JQ command will generate unique nodes information CSV from json fed file
-jq -r '["id:ID(Node)","importKey","name","nodeTemplateId", "nodeTemplateName",":LABEL"],([.[].nodeInstances[]]|unique_by(.id)[]|[.id, .importKey, .name, .nodeTemplateId, .nodeTemplateName, "Node"])|@csv' sample-topology_1.json >all_nodes.csv
+`jq -r '["id:ID(Node)","importKey","name","nodeTemplateId", "nodeTemplateName",":LABEL"],([.[].nodeInstances[]]|unique_by(.id)[]|[.id, .importKey, .name, .nodeTemplateId, .nodeTemplateName, "Node"])|@csv' sample-topology_1.json >all_nodes.csv`
 
 Following JQ command will generate relations of nodes information CSV from json fed file
 
-jq -r '["id:START_ID(Node)","id:END_ID(Node)",":TYPE"],(.[].relationshipInstances|flatten[]|[.srcId, .dstId, .relationship.relationshipType])|@csv' sample-topology_1.json >all_relations.csv
+`jq -r '["id:START_ID(Node)","id:END_ID(Node)",":TYPE"],(.[].relationshipInstances|flatten[]|[.srcId, .dstId, .relationship.relationshipType])|@csv' sample-topology_1.json >all_relations.csv`
 
 Import nodes and relations in neo4j from admin import tool
-bin/neo4j-admin database import full --nodes=/import/all_nodes.csv --relationships=/import/all_relations.csv sie
+`bin/neo4j-admin database import full --nodes=/import/all_nodes.csv --relationships=/import/all_relations.csv sie`
 
 https://neo4j.com/docs/operations-manual/current/tutorial/neo4j-admin-import/
 
