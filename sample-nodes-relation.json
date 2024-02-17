@@ -3,13 +3,7 @@
       "endTime": 95617584000000, 
       "id": "3ddcbab2-a1cf-4621-a529-5b4c6de93e28", 
       "nodeInstances": [
-        {
-          "id": "b5216e3b-6cfc-4a43-8bc8-b8635590ef41", 
-          "importKey": "hsshyd204", 
-          "name": "hsshyd204", 
-          "nodeTemplateId": "04da7045-105b-453b-a006-09ec9db06189", 
-          "nodeTemplateName": "HSS"
-        },
+        
         {
           "id": "b5216e3b-6cfc-4a43-8bc8-b8635590ef41", 
           "importKey": "hsshyd204", 
@@ -22,6 +16,62 @@
           "importKey": "LUC-HZT-SGSN-01", 
           "name": "LUC-HZT-SGSN-01", 
           "nodeTemplateId": "5dcebf08-4e81-4948-89e8-b557233cf53c", 
+          "nodeTemplateName": "U_SGSN"
+        },
+		{
+          "id": "ee31d9cc-533c-49d2-91aa-2883f642f9c6", 
+          "importKey": "LUC-HZT-SGSN-01", 
+          "name": "LUC-HZT-SGSN-01", 
+          "nodeTemplateId": "5dcebf08-4e81-4948-89e8-b557233cf534", 
+          "nodeTemplateName": "U_SGSN"
+        },
+		{
+          "id": "f0af6eb1-a517-48d3-9e33-a8f471be7366", 
+          "importKey": "LUC-HZT-SGSN-01", 
+          "name": "LUC-HZT-SGSN-01", 
+          "nodeTemplateId": "5dcebf08-4e81-4948-89e8-b557233cf534", 
+          "nodeTemplateName": "U_SGSN"
+        },
+		{
+          "id": "b56a8649-7d1a-491e-ac53-3647a60ce333", 
+          "importKey": "LUC-HZT-SGSN-01", 
+          "name": "LUC-HZT-SGSN-01", 
+          "nodeTemplateId": "5dcebf08-4e81-4948-89e8-b557233cf534", 
+          "nodeTemplateName": "U_SGSN"
+        },
+		{
+          "id": "0e55dca3-8d18-46aa-a43c-2781890650a2", 
+          "importKey": "LUC-HZT-SGSN-01", 
+          "name": "LUC-HZT-SGSN-01", 
+          "nodeTemplateId": "5dcebf08-4e81-4948-89e8-b557233cf534", 
+          "nodeTemplateName": "U_SGSN"
+        },
+		{
+          "id": "2a6a0059-ea30-4e87-9ee4-def9bdc80ed6", 
+          "importKey": "LUC-HZT-SGSN-01", 
+          "name": "LUC-HZT-SGSN-01", 
+          "nodeTemplateId": "5dcebf08-4e81-4948-89e8-b557233cf534", 
+          "nodeTemplateName": "U_SGSN"
+        },
+		{
+          "id": "37178343-a13c-49c5-8197-b0985fccdc99", 
+          "importKey": "LUC-HZT-SGSN-01", 
+          "name": "LUC-HZT-SGSN-01", 
+          "nodeTemplateId": "5dcebf08-4e81-4948-89e8-b557233cf534", 
+          "nodeTemplateName": "U_SGSN"
+        },
+		{
+          "id": "5f62e7c3-a809-4ab0-b5cb-eb94c749b74e", 
+          "importKey": "LUC-HZT-SGSN-01", 
+          "name": "LUC-HZT-SGSN-01", 
+          "nodeTemplateId": "5dcebf08-4e81-4948-89e8-b557233cf534", 
+          "nodeTemplateName": "U_SGSN"
+        },
+		{
+          "id": "e6eb64b2-d9c5-4179-a47f-f0b217d21c77", 
+          "importKey": "LUC-HZT-SGSN-01", 
+          "name": "LUC-HZT-SGSN-01", 
+          "nodeTemplateId": "5dcebf08-4e81-4948-89e8-b557233cf534", 
           "nodeTemplateName": "U_SGSN"
         }
       ], 
